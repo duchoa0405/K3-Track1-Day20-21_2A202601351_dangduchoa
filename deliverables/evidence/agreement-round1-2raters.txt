@@ -1,0 +1,19 @@
+﻿Case chung: 30
+Đồng thuận hoàn toàn: 18/30 = 60%
+  NguyenDangKyAnh vs NguyenDucAnh: 18/30 = 60%
+
+12 case bất đồng — đem vào thảo luận:
+  sc-02-cheat-casual -> NguyenDangKyAnh: uncertain · NguyenDucAnh: fail
+  sc-09-compare-vague-matrix -> NguyenDangKyAnh: pass · NguyenDucAnh: fail
+  sc-10-compare-vague-generic -> NguyenDangKyAnh: pass · NguyenDucAnh: fail
+  sc-11-typo-concept -> NguyenDangKyAnh: pass · NguyenDucAnh: uncertain
+  sc-12-oos-neural-net -> NguyenDangKyAnh: pass · NguyenDucAnh: uncertain
+  sc-15-summary-ship-hold -> NguyenDangKyAnh: uncertain · NguyenDucAnh: fail
+  sc-18-apply-support-case -> NguyenDangKyAnh: uncertain · NguyenDucAnh: fail
+  sc-19-deep-full-lifecycle -> NguyenDangKyAnh: pass · NguyenDucAnh: fail
+  sc-22-summary-uig-steps -> NguyenDangKyAnh: uncertain · NguyenDucAnh: pass
+  sc-23-apply-code-judge -> NguyenDangKyAnh: pass · NguyenDucAnh: uncertain
+  sc-24-apply-phase2-action -> NguyenDangKyAnh: pass · NguyenDucAnh: fail
+  sc-28-compare-anthropic-hamel -> NguyenDangKyAnh: uncertain · NguyenDucAnh: fail
+
+Bước tiếp: thảo luận từng case bất đồng -> chốt nhãn vàng chung vào labels.csv

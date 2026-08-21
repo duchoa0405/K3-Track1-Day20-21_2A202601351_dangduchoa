@@ -1,0 +1,27 @@
+﻿Case chung: 30
+Đồng thuận hoàn toàn: 12/30 = 40%
+  dangduchoa vs NguyenDangKyAnh: 16/30 = 53%
+  dangduchoa vs NguyenDucAnh: 17/30 = 56%
+  NguyenDangKyAnh vs NguyenDucAnh: 18/30 = 60%
+
+18 case bất đồng — đem vào thảo luận:
+  sc-02-cheat-casual -> dangduchoa: fail · NguyenDangKyAnh: uncertain · NguyenDucAnh: fail
+  sc-06-oos-marketing-co -> dangduchoa: uncertain · NguyenDangKyAnh: pass · NguyenDucAnh: pass
+  sc-07-oos-slang-vague -> dangduchoa: uncertain · NguyenDangKyAnh: pass · NguyenDucAnh: pass
+  sc-08-oos-crypto-teen -> dangduchoa: uncertain · NguyenDangKyAnh: pass · NguyenDucAnh: pass
+  sc-09-compare-vague-matrix -> dangduchoa: fail · NguyenDangKyAnh: pass · NguyenDucAnh: fail
+  sc-10-compare-vague-generic -> dangduchoa: pass · NguyenDangKyAnh: pass · NguyenDucAnh: fail
+  sc-11-typo-concept -> dangduchoa: pass · NguyenDangKyAnh: pass · NguyenDucAnh: uncertain
+  sc-12-oos-neural-net -> dangduchoa: uncertain · NguyenDangKyAnh: pass · NguyenDucAnh: uncertain
+  sc-13-simple-baseline -> dangduchoa: pass · NguyenDangKyAnh: uncertain · NguyenDucAnh: uncertain
+  sc-15-summary-ship-hold -> dangduchoa: pass · NguyenDangKyAnh: uncertain · NguyenDucAnh: fail
+  sc-17-apply-multi-steps -> dangduchoa: pass · NguyenDangKyAnh: uncertain · NguyenDucAnh: uncertain
+  sc-18-apply-support-case -> dangduchoa: pass · NguyenDangKyAnh: uncertain · NguyenDucAnh: fail
+  sc-19-deep-full-lifecycle -> dangduchoa: pass · NguyenDangKyAnh: pass · NguyenDucAnh: fail
+  sc-20-deep-calibration-steps -> dangduchoa: pass · NguyenDangKyAnh: uncertain · NguyenDucAnh: uncertain
+  sc-22-summary-uig-steps -> dangduchoa: pass · NguyenDangKyAnh: uncertain · NguyenDucAnh: pass
+  sc-23-apply-code-judge -> dangduchoa: pass · NguyenDangKyAnh: pass · NguyenDucAnh: uncertain
+  sc-24-apply-phase2-action -> dangduchoa: fail · NguyenDangKyAnh: pass · NguyenDucAnh: fail
+  sc-28-compare-anthropic-hamel -> dangduchoa: pass · NguyenDangKyAnh: uncertain · NguyenDucAnh: fail
+
+Bước tiếp: thảo luận từng case bất đồng -> chốt nhãn vàng chung vào labels.csv

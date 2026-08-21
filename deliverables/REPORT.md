@@ -65,9 +65,9 @@ results-vN.jsonl, labels.csv, judge-prompt-vN.md, verdicts-vN.jsonl, braintrust-
 ### Thống kê & Phân tích Bộ Dữ Liệu (Dataset v1)
 - **Quy mô:** Tổng cộng **30 scenarios** (được lưu tại `dataset.jsonl` và `deliverables/evidence/dataset-v1.jsonl`).
 - **Phân bổ Tỉ lệ:**
-  - 🟢 **In-scope (16 câu - 53.3%):** Bao phủ các khái niệm cốt lõi, so sánh, tổng hợp đa tài liệu và áp dụng thực tế.
+  - 🟢 **In-scope (17 câu - 56.7%):** Bao phủ các khái niệm cốt lõi, so sánh, tổng hợp đa tài liệu và áp dụng thực tế.
   - 🔴 **Out-of-scope & Adversarial (10 câu - 33.3%):** 5 câu xin đáp án/jailbreak + 5 câu ngoài lề môn học/nghiệp vụ công ty.
-  - 🟡 **Mơ hồ / Unclear (4 câu - 13.3%):** Các câu deixis ("cái này"), phiếm chỉ thiếu chủ ngữ cần tutor hỏi lại (clarify).
+  - 🟡 **Mơ hồ / Unclear (3 câu - 10%):** Các câu deixis ("cái này"), phiếm chỉ thiếu chủ ngữ cần tutor hỏi lại (clarify) — `sc-09`, `sc-10`, `sc-26`.
 - **Lý do chọn tỉ lệ này:** Tuân thủ nguyên tắc Gate 1 (có $\ge 2$ câu out-of-scope, $\ge 2$ câu mơ hồ, $\ge 2$ câu high-risk). Không dồn vào Happy Path để kiểm tra toàn diện khả năng phòng thủ, nhận diện ranh giới và tính linh hoạt sư phạm của Tutor.
 - **Nguồn gốc câu hỏi:**
   - *Trace từ slide & bài giảng:* 14 câu gắn `metadata.slide` bám sát nội dung slide Day 19-20 và các module.
@@ -229,9 +229,32 @@ results-vN.jsonl, labels.csv, judge-prompt-vN.md, verdicts-vN.jsonl, braintrust-
 
 #### 2. Quá trình đồng thuận của con người
 
-- Agreement vòng độc lập (nhãn tổng): ___% — kèm thống kê từ note: tiêu chí nào gây bất đồng nhiều nhất
-- Mâu thuẫn lớn nhất: (case/tiêu chí nào, hai phía nghĩ gì)
-- Nhóm xử lý bằng cách nào: (siết định nghĩa / đổi thang / bỏ tiêu chí...)
+- **Agreement vòng độc lập, 3 người** (30/30 row chung, đo TRƯỚC khi thảo luận — xem
+  `deliverables/evidence/agreement-round1.txt`): đồng thuận cả 3 người **12/30 = 40%**; theo
+  cặp dangduchoa–NguyenDangKyAnh 53% · dangduchoa–NguyenDucAnh 56% ·
+  NguyenDangKyAnh–NguyenDucAnh 60%.
+- **Quyết định phạm vi:** loại vòng chấm của dangduchoa khỏi cơ sở tính nhãn vàng vì dữ liệu
+  không đạt chất lượng (quyết định của chính người chấm, ghi lại minh bạch thay vì âm thầm bỏ).
+  Nhãn vàng cuối cùng chỉ dựa trên `labels-NguyenDangKyAnh.csv` + `labels-NguyenDucAnh.csv`.
+- **Agreement 2 người còn lại** (xem `deliverables/evidence/agreement-round1-2raters.txt`):
+  **18/30 = 60%** đồng thuận ngay — đã vượt ngưỡng Gate 2 (nhãn vàng cho 15–20 outputs). 12/30
+  row còn lại hai người vẫn bất đồng.
+- **3 pattern bất đồng chính** (đọc từ cột note, không phải ngẫu nhiên — xem đầy đủ trong
+  `deliverables/evidence/disagreement-worksheet.md`):
+  1. *Ranh giới xử lý câu mơ hồ* (sc-09, 10, 11, 12): tutor tự đoán ý học viên khi câu hỏi
+     thiếu ngữ cảnh — bắt buộc hỏi lại hay chấp nhận đoán nếu đoán đúng?
+  2. *Độ nghiêm ngặt của groundedness* (sc-13, 18, 22, 28): soi từng luận điểm/con số cụ thể
+     có được quote trong source cite, hay chấp nhận nội dung tổng thể đúng?
+  3. *Tiêu chuẩn "đủ ý" khi liệt kê/tóm tắt* (sc-19, 23, 24): thiếu 1 mục trong danh sách kỳ
+     vọng có fail toàn bộ row không, hay chỉ trừ điểm followup quality?
+- **Mâu thuẫn lớn nhất:** `sc-19-deep-full-lifecycle` — NguyenDangKyAnh pass, NguyenDucAnh fail
+  vì "chỉ nêu ba giai đoạn, bỏ sót sáu phase và quyết định Ship". Case này lộ rõ nhất pattern #3:
+  không có định nghĩa chung về "đủ ý" khi tutor tóm tắt một quy trình nhiều bước.
+- **Nhóm xử lý bằng cách nào:** 12 row bất đồng không tie-break tuỳ tiện mà chốt nhãn
+  **uncertain** (đúng nghĩa: 2 người chấm lệch nhau, chưa đủ căn cứ chung để khẳng định
+  pass/fail) kèm note ghi rõ hai phía nghĩ gì — xem `labels.csv`. 3 pattern ở trên đưa thẳng
+  vào Rubric v1 ở Phase 3 thành tiêu chí Yes/No quan sát được, thay vì để mỗi người tự diễn
+  giải "đủ tốt".
 
 #### 3. LLM judge
 
