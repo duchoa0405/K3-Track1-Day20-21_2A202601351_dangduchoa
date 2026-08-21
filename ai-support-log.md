@@ -21,4 +21,4 @@
 
 ### Tôi đã tự sửa hoặc quyết định lại điều gì?
 - Tự nhận diện và đồng thuận cùng nhóm loại bỏ vòng chấm cá nhân ban đầu (`evidence/labels-dangduchoa.csv`) khỏi cơ sở tính nhãn vàng chung nhằm đảm bảo tính chuẩn xác và chất lượng cao nhất cho ground truth.
-
+- Quyết định bảo vệ nguyên tắc Gate cứng: Không hạ threshold của tiêu chí `scope_matches_expected` xuống dưới 100% để "cho qua", kiên quyết giữ verdict HOLD vì an toàn sư phạm và liêm chính học thuật.

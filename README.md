@@ -1,14 +1,14 @@
-# Track1_Day21 — AI Evaluation Capstone — Nguyễn Đặng Kỳ Anh
+# Track1_Day21 — AI Evaluation Capstone — Đặng Đức Hòa
 
-Bài nộp cá nhân của **Nguyễn Đặng Kỳ Anh** (MHV `2A202601501`) cho capstone AI Evaluation,
+Bài nộp cá nhân của **Đặng Đức Hòa** (MHV `2A202601351`) cho capstone AI Evaluation,
 case **VLearn AI Tutor**. Repo này là bản trỏ tới **Eval Pack chung của nhóm 3 người**.
 
 ## Thông tin nhóm
 
 | Thành viên | MHV | Vai trò lead (không loại trừ tham gia phase khác) |
 |---|---|---|
-| **Nguyễn Đặng Kỳ Anh** (repo này) | `2A202601501` | Lead Analytics & Reporting |
-| Đặng Đức Hòa | `2A202601351` | Lead Coverage & Data |
+| Nguyễn Đặng Kỳ Anh | `2A202601501` | Lead Analytics & Reporting |
+| **Đặng Đức Hòa** | `2A202601351` | Lead Coverage & Data |
 | Nguyễn Đức Anh | `2A202601063` | Lead Quality & Judge |
 
 Eval Pack chung — cả 3 repo cá nhân của nhóm cùng trỏ tới đúng bộ `dataset-v1.jsonl` (30
@@ -26,19 +26,21 @@ lập ở `deliverables/evidence/`.
 | 5. Threshold & scorecard | Chốt ngưỡng trước, đọc theo slice, đọc tay trace fail | `REPORT.md` mục 6 |
 | 6. Verdict | Ship/Hold có evidence + điều kiện | `REPORT.md` mục 7, `ai-support-log.md` |
 
-## Đóng góp cá nhân của tôi (Nguyễn Đặng Kỳ Anh)
+## Đóng góp cá nhân của tôi (Đặng Đức Hòa)
 
-- **Phase 1** (cùng cả nhóm — bắt buộc 3 người): tham gia chọn 6 dimension, review combinations,
-  họp duyệt Keep/Rewrite/Reject câu AI paraphrase.
-- **Phase 2**: chấm độc lập 30/30 câu → `evidence/labels-NguyenDangKyAnh.csv`; cùng nhóm đo
-  agreement, tranh luận 12 case bất đồng còn lại sau khi loại vòng chấm của Đức Hòa (dữ liệu
-  không đạt chất lượng — quyết định chung của nhóm, ghi minh bạch trong `REPORT.md` mục 7.2).
-- **Phase 3 (lead):** viết Rubric v1 (6 tiêu chí, rút từ 3 pattern bất đồng thật) và Routing Map
-  4 làn kèm lý do — `REPORT.md` mục 3–4.
-- **Phase 4 (đồng lead cùng Đức Anh):** viết 2 code check tự thêm (`scope_matches_expected`,
-  `followup_count` trong `eval/code_checks.py`), đối chiếu kết quả code-check với nhãn vàng.
-- **Phase 5–6 (lead):** tổng hợp scorecard, chốt threshold có timestamp, đọc theo slice, đọc tay
-  3 trace fail, viết verdict + report 5 phần, chốt `REPORT.md` và `ai-support-log.md`.
+- **Phase 1 (Lead Coverage & Data):** chủ trì thiết kế User Input Grid, chọn 12 combinations
+  (4 High-Risk, 2 Challenge, 6 Representative), điều phối paraphrase và trực tiếp lọc
+  Keep/Rewrite/Reject từng câu hỏi; quản lý `dataset.jsonl` và `deliverables/evidence/dataset-v1.jsonl`
+  (30 scenarios).
+- **Phase 2:** chấm độc lập 30/30 câu → `evidence/labels-dangduchoa.csv`; cùng nhóm đo
+  Human Agreement và tham gia thảo luận các ca bất đồng; chủ động đề xuất loại vòng chấm cá nhân
+  khỏi cơ sở tính nhãn vàng chung do dữ liệu chưa đạt chất lượng (quyết định minh bạch được ghi nhận
+  trong `REPORT.md` mục 7.2).
+- **Phase 3:** tham gia thảo luận siết Rubric v1 từ các pattern bất đồng và định hình bảng Routing Map 4 làn.
+- **Phase 4:** cùng nhóm theo dõi các vòng chạy code checks và 2 vòng calibrate LLM judge.
+- **Phase 5 (hỗ trợ phân tích):** hỗ trợ đọc và phân tích chuyên sâu slice `high_risk` (9 câu),
+  đối chiếu 3 trace fail quan trọng (`sc-02`, `sc-04`, `sc-30`).
+- **Phase 6:** cùng nhóm thống nhất chốt Verdict **HOLD** dựa trên evidence vi phạm gate cứng liêm chính học thuật.
 
 ## Verdict của nhóm: **HOLD**
 
