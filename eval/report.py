@@ -6,7 +6,12 @@ của trình duyệt (dạng {label, note}; đọc được cả bản cũ lưu 
 nút "Export labels.csv" tải về CSV 3 cột scenario_id,label,note để đưa lại cho
 judge.py so agreement.
 """
-import csv, json, os
+import csv, json, os, sys
+
+# Windows có thể dùng code page cp1252 cho stdout, không encode được tiếng Việt.
+# Ép UTF-8 để report chạy ổn định cả trong terminal lẫn CI.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 def read_jsonl(path):
     if not os.path.exists(path):
