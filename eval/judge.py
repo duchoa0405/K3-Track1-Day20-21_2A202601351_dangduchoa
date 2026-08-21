@@ -34,7 +34,7 @@ def read_labels(path="labels.csv"):
     """labels.csv: scenario_id,label,note — chỉ lấy dòng có label."""
     if not os.path.exists(path):
         return {}
-    with open(path, encoding="utf-8") as f:
+    with open(path, encoding="utf-8-sig") as f:  # utf-8-sig: bỏ qua BOM nếu Excel/report.html có thêm
         return {r["scenario_id"]: r["label"].strip().lower()
                 for r in csv.DictReader(f) if r.get("label", "").strip()}
 

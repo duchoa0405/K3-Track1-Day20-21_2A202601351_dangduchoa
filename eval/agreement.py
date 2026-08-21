@@ -13,7 +13,7 @@ import sys
 
 
 def read_labels(path):
-    with open(path, encoding="utf-8") as f:
+    with open(path, encoding="utf-8-sig") as f:  # utf-8-sig: bỏ qua BOM nếu Excel/report.html có thêm
         return {r["scenario_id"]: r.get("label", "").strip().lower()
                 for r in csv.DictReader(f) if r.get("scenario_id") and r.get("label", "").strip()}
 

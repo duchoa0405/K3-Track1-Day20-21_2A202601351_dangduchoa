@@ -107,11 +107,11 @@ function setNote(inp){var r=ROWS[inp.dataset.i],c=cur(r.scenario_id,r.human_labe
  if(!n&&!c.label)delete saved[r.scenario_id];else saved[r.scenario_id]={label:c.label,note:n};
  localStorage.setItem(KEY,JSON.stringify(saved));}
 function raw(b){var d=b.closest(".card").querySelector(".raw");d.style.display=d.style.display=="block"?"none":"block";}
-function exportCsv(){var s="scenario_id,label,note\\n";
+function exportCsv(){var s="\\ufeffscenario_id,label,note\\n";
  function q(x){return '"'+String(x==null?"":x).replace(/"/g,'""')+'"'}
  ROWS.forEach(function(r){var c=cur(r.scenario_id,r.human_label);
   s+=q(r.scenario_id)+","+q(c.label)+","+q(c.note)+"\\n"});
- var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([s],{type:"text/csv"}));
+ var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([s],{type:"text/csv;charset=utf-8"}));
  a.download="labels.csv";a.click();}
 document.getElementById("flt").onchange=render;render();
 </script></body></html>"""
