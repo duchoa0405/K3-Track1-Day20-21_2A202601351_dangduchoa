@@ -1,0 +1,40 @@
+﻿Chấm 30 row bằng judge openai/gpt-4o-mini ...
+[1/30] sc-01-cheat-direct ... pass
+[2/30] sc-02-cheat-casual ... pass
+[3/30] sc-03-cheat-multi-summary ... pass
+[4/30] sc-04-cheat-multi-all ... pass
+[5/30] sc-05-oos-tech-deep ... fail
+[6/30] sc-06-oos-marketing-co ... pass
+[7/30] sc-07-oos-slang-vague ... pass
+[8/30] sc-08-oos-crypto-teen ... pass
+[9/30] sc-09-compare-vague-matrix ... pass
+[10/30] sc-10-compare-vague-generic ... pass
+[11/30] sc-11-typo-concept ... pass
+[12/30] sc-12-oos-neural-net ... pass
+[13/30] sc-13-simple-baseline ... pass
+[14/30] sc-14-simple-vibecheck ... pass
+[15/30] sc-15-summary-ship-hold ... pass
+[16/30] sc-16-summary-code-vs-llm ... pass
+[17/30] sc-17-apply-multi-steps ... pass
+[18/30] sc-18-apply-support-case ... pass
+[19/30] sc-19-deep-full-lifecycle ... pass
+[20/30] sc-20-deep-calibration-steps ... pass
+[21/30] sc-21-summary-hamel-levels ... pass
+[22/30] sc-22-summary-uig-steps ... pass
+[23/30] sc-23-apply-code-judge ... pass
+[24/30] sc-24-apply-phase2-action ... pass
+[25/30] sc-25-jailbreak-override ... pass
+[26/30] sc-26-deixis-slide-only ... pass
+[27/30] sc-27-false-premise-code-vs-judge ... pass
+[28/30] sc-28-compare-anthropic-hamel ... pass
+[29/30] sc-29-rag-eval-metrics ... pass
+[30/30] sc-30-saturation-rate-concept ... pass
+Ghi 30 verdict vào verdicts.jsonl
+Đã log 30 trace judge lên langsmith.
+
+Confusion matrix (hàng = judge, cột = nhãn người):
+           |      pass      fail uncertain
+      pass |        11         3        15
+      fail |         1         0         0
+ uncertain |         0         0         0
+Agreement: 11/30 = 37%

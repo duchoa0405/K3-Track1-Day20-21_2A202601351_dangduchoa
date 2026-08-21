@@ -1,4 +1,71 @@
-# K3 Track 1 · Day 20–21 — AI Evaluation (eval-kit)
+# Track1_Day21 — AI Evaluation Capstone — Nguyễn Đặng Kỳ Anh
+
+Bài nộp cá nhân của **Nguyễn Đặng Kỳ Anh** (MHV `2A202601501`) cho capstone AI Evaluation,
+case **VLearn AI Tutor**. Repo này là bản trỏ tới **Eval Pack chung của nhóm 3 người**.
+
+## Thông tin nhóm
+
+| Thành viên | MHV | Vai trò lead (không loại trừ tham gia phase khác) |
+|---|---|---|
+| **Nguyễn Đặng Kỳ Anh** (repo này) | `2A202601501` | Lead Analytics & Reporting |
+| Đặng Đức Hòa | `2A202601351` | Lead Coverage & Data |
+| Nguyễn Đức Anh | `2A202601063` | Lead Quality & Judge |
+
+Eval Pack chung — cả 3 repo cá nhân của nhóm cùng trỏ tới đúng bộ `dataset-v1.jsonl` (30
+scenarios), `results-v1.jsonl`, và cùng thống nhất `labels.csv` (nhãn vàng) sau vòng chấm độc
+lập ở `deliverables/evidence/`.
+
+## Sáu phase & artifact
+
+| Phase | Việc chính | Artifact (trong `deliverables/`) |
+|---|---|---|
+| 1. Thiết kế coverage | Chọn dimensions/values/combinations, paraphrase, Keep/Rewrite/Reject | `REPORT.md` mục 1–2, `evidence/dataset-v1.jsonl` (30 dòng: 17 in-scope / 10 out-of-scope / 3 mơ hồ, 9 high-risk) |
+| 2. Human baseline | 3 người chấm độc lập, đo agreement, chốt nhãn vàng | `evidence/labels-{dangduchoa,NguyenDangKyAnh,NguyenDucAnh}.csv`, `evidence/labels.csv`, `evidence/agreement-round1*.txt`, `evidence/disagreement-worksheet.md`, `evidence/results-v1.jsonl` |
+| 3. Rubric & routing | 6 tiêu chí + bảng routing 4 làn | `REPORT.md` mục 3–4 |
+| 4. Scale & calibrate | Code checks + 2 vòng calibrate/tiêu chí judge | `evidence/code-checks-v1.txt`, `evidence/judge-prompt-{groundedness,followup}-v{1,2}.md`, `evidence/verdicts-{groundedness,followup}-v{1,2}.jsonl`, `REPORT.md` mục 5 |
+| 5. Threshold & scorecard | Chốt ngưỡng trước, đọc theo slice, đọc tay trace fail | `REPORT.md` mục 6 |
+| 6. Verdict | Ship/Hold có evidence + điều kiện | `REPORT.md` mục 7, `ai-support-log.md` |
+
+## Đóng góp cá nhân của tôi (Nguyễn Đặng Kỳ Anh)
+
+- **Phase 1** (cùng cả nhóm — bắt buộc 3 người): tham gia chọn 6 dimension, review combinations,
+  họp duyệt Keep/Rewrite/Reject câu AI paraphrase.
+- **Phase 2**: chấm độc lập 30/30 câu → `evidence/labels-NguyenDangKyAnh.csv`; cùng nhóm đo
+  agreement, tranh luận 12 case bất đồng còn lại sau khi loại vòng chấm của Đức Hòa (dữ liệu
+  không đạt chất lượng — quyết định chung của nhóm, ghi minh bạch trong `REPORT.md` mục 7.2).
+- **Phase 3 (lead):** viết Rubric v1 (6 tiêu chí, rút từ 3 pattern bất đồng thật) và Routing Map
+  4 làn kèm lý do — `REPORT.md` mục 3–4.
+- **Phase 4 (đồng lead cùng Đức Anh):** viết 2 code check tự thêm (`scope_matches_expected`,
+  `followup_count` trong `eval/code_checks.py`), đối chiếu kết quả code-check với nhãn vàng.
+- **Phase 5–6 (lead):** tổng hợp scorecard, chốt threshold có timestamp, đọc theo slice, đọc tay
+  3 trace fail, viết verdict + report 5 phần, chốt `REPORT.md` và `ai-support-log.md`.
+
+## Verdict của nhóm: **HOLD**
+
+Gate cứng "0 case out-of-scope bị trả lời như in-scope" (chốt threshold trước khi xem candidate)
+bị vi phạm 2/9 lần đúng ở slice rủi ro cao nhất (`sc-02-cheat-casual`, `sc-04-cheat-multi-all`) —
+tutor trả lời trực tiếp nội dung rubric/tóm tắt bài học khi học viên xin đáp án trá hình dưới
+dạng "tóm tắt giúp em". Đây là lỗi liêm chính học thuật, đúng loại rủi ro dataset được thiết kế để
+bắt — không trade-off được dù 3 gate còn lại (schema 100%, citation 100%, groundedness 100% trên
+phạm vi rubric) đều đạt. Đòn bẩy tiếp theo: sửa `SYSTEM_PROMPT` (rẻ nhất, thử trước) bằng 2 ví dụ
+few-shot đúng từ 2 case fail thật, rồi chạy lại đúng dataset v1 và yêu cầu `scope_matches_expected`
+đạt 100% trên toàn bộ 9 case `high_risk` trước khi đổi verdict sang Ship. Chi tiết đầy đủ:
+`deliverables/REPORT.md` mục 6–7.
+
+## Điều tôi sẽ mang về áp dụng
+
+Tách threshold thành "blocker vs advisory" và **viết ra bằng văn bản trước khi chạy candidate
+cuối** — trong buổi làm việc này, việc chốt threshold trước (mục 6 của REPORT.md) đã ngăn được
+cám dỗ hạ ngưỡng `scope_matches_expected` xuống dưới 100% chỉ vì 3 gate khác đã xanh. Bài học thứ
+hai: agreement% của một LLM judge chỉ đáng tin khi so với gold **đúng phạm vi tiêu chí nó chấm** —
+judge follow-up quality của nhóm agreement giảm (73%→60%) ở vòng 2 dù chấm đúng hơn, vì đang so
+với gold tổng thể chứ không phải gold riêng cho tiêu chí đó. Sẽ áp dụng cả hai vào dự án thật: khóa
+threshold bằng văn bản trước khi review kết quả, và không tin số agreement của judge hẹp nếu chưa
+có gold cùng phạm vi.
+
+---
+
+# Hướng dẫn kỹ thuật repo (eval-kit)
 
 Repo làm bài capstone **AI Evaluation** của case **VLearn AI Tutor** — trợ giảng trả lời
 câu hỏi học viên, chỉ dựa trên tài liệu khóa học, output là JSON

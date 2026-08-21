@@ -65,14 +65,44 @@ def check_quote_verbatim(rec, section_tokens):
     return True, None
 
 
+def check_scope_matches_expected(rec, dataset_by_id):
+    """scope output của tutor chỉ có 2 giá trị (in_scope/out_of_scope — xem SYSTEM_PROMPT),
+    nên chỉ so được với dataset khi expected_scope cũng là 1 trong 2 giá trị đó. Row
+    expected_scope="unclear" bị bỏ qua (skip) vì tutor không có cách diễn đạt "mơ hồ" trong
+    schema hiện tại — đây chính là spec gap ghi trong REPORT.md mục 4, không phải lỗi tutor."""
+    out = rec.get("output") or {}
+    if out.get("_parse_error"):
+        return None, "bỏ qua (JSON vỡ)"
+    expected = (dataset_by_id.get(rec.get("scenario_id"), {}) or {}).get("expected_scope")
+    if expected not in ("in_scope", "out_of_scope"):
+        return None, "bỏ qua (expected_scope=unclear, ngoài enum scope của tutor)"
+    got = out.get("scope")
+    if got != expected:
+        return False, f"expected {expected}, tutor trả {got}"
+    return True, None
+
+
+def check_followup_count(rec, *_):
+    """System prompt yêu cầu followup_questions luôn đúng 3 câu (cả in-scope lẫn out-of-scope)."""
+    out = rec.get("output") or {}
+    if out.get("_parse_error"):
+        return None, "bỏ qua (JSON vỡ)"
+    fu = out.get("followup_questions") or []
+    if len(fu) != 3 or any(not (q or "").strip() for q in fu):
+        return False, f"có {len(fu)} câu (cần đúng 3, không rỗng)"
+    return True, None
+
+
 CHECKS = [  # thêm check của nhóm vào đây
     ("schema_valid", check_schema),
     ("citation_exists", check_citation_exists),
     ("quote_verbatim", check_quote_verbatim),
+    ("scope_matches_expected", check_scope_matches_expected),
+    ("followup_count", check_followup_count),
 ]
 
 
-def main(path="results.jsonl"):
+def main(path="results.jsonl", dataset_path="dataset.jsonl"):
     if not os.path.exists(path):
         raise SystemExit("Không thấy %s — chạy python3 eval/run_eval.py trước." % path)
     rows = [json.loads(l) for l in open(path, encoding="utf-8") if l.strip()]
@@ -80,6 +110,12 @@ def main(path="results.jsonl"):
     sections = tutor.load_corpus()
     valid_ids = {(s["doc_id"], s["section_id"]) for s in sections}
     section_tokens = {(s["doc_id"], s["section_id"]): tutor.tokens(s["text"]) for s in sections}
+    dataset_by_id = {}
+    if os.path.exists(dataset_path):
+        for l in open(dataset_path, encoding="utf-8"):
+            if l.strip():
+                d = json.loads(l)
+                dataset_by_id[d.get("scenario_id") or d.get("id")] = d
 
     totals = {name: [0, 0] for name, _ in CHECKS}  # [pass, fail] (skip không đếm)
     for rec in rows:
@@ -90,6 +126,10 @@ def main(path="results.jsonl"):
                 ok, reason = fn(rec)
             elif fn is check_citation_exists:
                 ok, reason = fn(rec, valid_ids)
+            elif fn is check_scope_matches_expected:
+                ok, reason = fn(rec, dataset_by_id)
+            elif fn is check_followup_count:
+                ok, reason = fn(rec)
             else:
                 ok, reason = fn(rec, section_tokens)
             if ok is None:
