@@ -6,5 +6,4 @@ dataset.jsonl
 results.jsonl
 verdicts.jsonl
 labels.csv
-labels-*.csv
 report.html
